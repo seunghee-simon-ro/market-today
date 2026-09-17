@@ -37,7 +37,10 @@ def get_market_data(symbol):
         * 100
     )
 
+    latest_date = data.index[-1].strftime("%Y-%m-%d")
+
     return {
+        "Date": latest_date,
         "Price": round(latest_close, 2),
         "Daily Change (%)": round(change_percent, 2)
     }
@@ -52,6 +55,7 @@ for market, symbol in MARKETS.items():
     if data:
         results.append({
             "Market": market,
+            "Date": data["Date"],
             "Price": data["Price"],
             "Daily Change (%)": data["Daily Change (%)"]
         })
