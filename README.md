@@ -103,6 +103,7 @@ market-today/
     ├── fx_data.py
     ├── commodity_data.py
     └── news_data.py
+```
 
 ## 📊 Data Sources
 
@@ -150,3 +151,7 @@ Potential future improvements include:
 - Additional economic indicators
 - Improved news classification
 - Cloud deployment
+
+## 👤 Author
+
+**Simon Ro**
