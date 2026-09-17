@@ -1,13 +1,17 @@
 import requests
 import pandas as pd
 import time
+import os
+from dotenv import load_dotenv
 
 # ==========================================
 # Market Today
 # Global Stock Market Snapshot
 # ==========================================
 
-API_KEY = "V5R1FX9IU29F25FF"
+load_dotenv()
+
+API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")
 BASE_URL = "https://www.alphavantage.co/query"
 
 # Major global indices (ETF used where index API is unavailable)
