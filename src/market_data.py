@@ -1,48 +1,45 @@
-import requests
+import yfinance as yf
 import pandas as pd
-import time
-import os
-from dotenv import load_dotenv
 
 # ==========================================
 # Market Today
 # Global Stock Market Snapshot
 # ==========================================
 
-load_dotenv()
-
-API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")
-BASE_URL = "https://www.alphavantage.co/query"
-
-# Major global indices (ETF used where index API is unavailable)
 MARKETS = {
-    "S&P 500": "SPY",
-    "NASDAQ 100": "QQQ",
-    "ASX 200": "EWA",
-    "Nikkei 225": "EWJ",
-    "KOSPI": "EWY",
-    "Hang Seng": "EWH"
+    "S&P 500": "^GSPC",
+    "NASDAQ 100": "^NDX",
+    "ASX 200": "^AXJO",
+    "Nikkei 225": "^N225",
+    "KOSPI": "^KS11",
+    "Hang Seng": "^HSI"
 }
 
 
 def get_market_data(symbol):
-    params = {
-        "function": "GLOBAL_QUOTE",
-        "symbol": symbol,
-        "apikey": API_KEY
-    }
 
-    response = requests.get(BASE_URL, params=params)
-    data = response.json()
+    data = yf.download(
+        symbol,
+        period="5d",
+        progress=False,
+        auto_adjust=False
+    )
 
-    if "Global Quote" not in data or not data["Global Quote"]:
+    if data.empty:
         return None
 
-    quote = data["Global Quote"]
+    latest_close = float(data["Close"].iloc[-1].iloc[0])
+    previous_close = float(data["Close"].iloc[-2].iloc[0])
+
+    change_percent = (
+        (latest_close - previous_close)
+        / previous_close
+        * 100
+    )
 
     return {
-        "Price": float(quote["05. price"]),
-        "Change (%)": float(quote["10. change percent"].replace("%", ""))
+        "Price": round(latest_close, 2),
+        "Daily Change (%)": round(change_percent, 2)
     }
 
 
@@ -55,11 +52,10 @@ for market, symbol in MARKETS.items():
     if data:
         results.append({
             "Market": market,
-            "Price": round(data["Price"], 2),
-            "Daily Change (%)": round(data["Change (%)"], 2)
+            "Price": data["Price"],
+            "Daily Change (%)": data["Daily Change (%)"]
         })
 
-    time.sleep(12)      # Free API limit (5 requests/minute)
 
 market_df = pd.DataFrame(results)
 
@@ -67,9 +63,12 @@ print("\n==============================")
 print("      MARKET TODAY")
 print("==============================\n")
 
-print(market_df)
+print(market_df.to_string(index=False))
 
-market_df.to_csv("data/global_market_snapshot.csv", index=False)
+market_df.to_csv(
+    "data/global_market_snapshot.csv",
+    index=False
+)
 
 print("\nSaved:")
 print("data/global_market_snapshot.csv")
