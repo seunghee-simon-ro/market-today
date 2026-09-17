@@ -1,105 +1,152 @@
-# Market Today
+# 📈 Market Today
 
-**Global markets, explained simply.**
+> **The market snapshot I check every morning.**
 
-Market Today is a beginner-friendly global market project designed to make financial markets easier to understand.
+Market Today is a personal financial dashboard designed to provide a quick snapshot of the global markets I follow on a daily basis.
 
-The project collects market data and presents key movements in a simple format, with the goal of connecting **market data, business context, and clear explanations**.
+Instead of checking multiple websites and financial platforms every morning, the dashboard brings the key market indicators together in one place so I can quickly see what has changed since the previous trading session.
 
-## Project Overview
+## 🌍 What I Check Every Morning
 
-Market Today explores major global financial markets and helps answer simple questions:
+### 📊 Global Markets
 
-- What happened in the market today?
-- Which markets moved?
-- How much did they move?
-- Why might the movement matter?
+Major equity indices across key markets:
 
-The project is being developed step by step, starting with global market data collection.
+- 🇺🇸 S&P 500
+- 🇺🇸 NASDAQ 100
+- 🇦🇺 ASX 200
+- 🇯🇵 Nikkei 225
+- 🇰🇷 KOSPI
+- 🇭🇰 Hang Seng
 
-## Current Features
+Each market shows its latest index level, daily percentage change, and last available trading date.
 
-### Global Market Snapshot
+Historical performance can also be explored across:
 
-The current version collects daily market data for:
+- 1 Month
+- 6 Months
+- 1 Year
+- 5 Years
+- 10 Years
 
-- S&P 500
-- NASDAQ 100
-- ASX 200
-- Nikkei 225
-- KOSPI
-- Hang Seng
+### 💱 Foreign Exchange
 
-The data is collected using the Alpha Vantage API and saved as a CSV file for further analysis.
+AUD exchange rates against major currencies:
 
-## Tools & Technologies
+- AUD/USD
+- AUD/KRW
+- AUD/CNY
+- AUD/JPY
 
-- Python
-- Pandas
-- Requests
-- Alpha Vantage API
-- Git
-- GitHub
+These are particularly useful for monitoring movements in the Australian dollar against major currencies.
 
-## Project Structure
+### 🪨 Commodities
+
+Key commodities that I follow:
+
+- Gold
+- Crude Oil
+- Copper
+- Iron Ore
+
+### 💰 Interest Rates
+
+The dashboard tracks the US Federal Funds target range using data from the Federal Reserve Economic Data (FRED).
+
+### 📰 Market News
+
+Recent financial and economic headlines collected through CNBC RSS.
+
+News can be filtered by category to quickly focus on the topics relevant to the day's market movements.
+
+## 🖥️ Dashboard
+
+The dashboard is organised into five sections:
+
+**Markets · FX · Commodities · Rates · News**
+
+The objective is simple:
+
+> **Open the dashboard → scan the key numbers → understand what moved → start the day.**
+
+## 🛠️ Tools & Technologies
+
+- **Python**
+- **Streamlit**
+- **Pandas**
+- **yfinance**
+- **FRED API**
+- **Feedparser**
+- **Altair**
+- **Git & GitHub**
+
+## 📁 Project Structure
 
 ```text
 market-today/
+│
+├── app.py
 ├── README.md
+├── .gitignore
+├── .env
+│
 ├── data/
-│   └── global_market_snapshot.csv
+│   ├── global_market_snapshot.csv
+│   ├── us_interest_rate.csv
+│   ├── fx_snapshot.csv
+│   ├── commodity_snapshot.csv
+│   └── news_snapshot.csv
+│
 └── src/
-    └── market_data.py
-```
+    ├── market_data.py
+    ├── interest_rates.py
+    ├── fx_data.py
+    ├── commodity_data.py
+    └── news_data.py
 
-## Data Pipeline
+## 📊 Data Sources
 
-```text
-Alpha Vantage API
-        │
-        ▼
-     Python
-        │
-        ▼
-   Market Data
-        │
-        ▼
-     Pandas
-        │
-        ▼
-Daily Change
-Calculation
-        │
-        ▼
-Market Snapshot
-        │
-        ▼
-     CSV File
-```
+| Data | Source |
+|---|---|
+| Global Markets | Yahoo Finance |
+| Foreign Exchange | Yahoo Finance |
+| Commodities | Yahoo Finance |
+| US Federal Funds Target Range | FRED |
+| Market News | CNBC RSS |
 
-## Future Development
+## 🔎 Key Features
 
-The project will gradually expand to include:
+- Daily global market snapshot
+- Latest index levels and daily movements
+- Historical market performance
+- AUD-based FX monitoring
+- Key commodity prices
+- US Federal Funds target range
+- Categorised market news
+- Single-page morning market overview
+- Interactive Streamlit dashboard
 
-- Global interest rates
-- Foreign exchange rates
-- Commodities
-- Market news
-- Simple market explanations
-- "What happened?" summaries
-- "Why does it matter?" explanations
-- Interactive dashboard
+## 🎯 Project Purpose
 
-## Project Goal
+I built Market Today to solve a simple problem in my own daily workflow.
 
-The goal is not simply to collect financial data.
+Every morning, I want to quickly check the markets that matter to me — equity indices, currencies, commodities, interest rates, and major financial news.
 
-Market Today aims to explore how **data and technology can make complex global markets easier to understand**, especially for people who are new to financial markets.
+Previously, this meant checking multiple sources separately.
 
-## Notes
+Market Today brings these indicators together into a single dashboard so that I can get a quick overview of the global market before starting the day.
 
-Market data is collected through the Alpha Vantage API.
+The project also serves as a practical exercise in building a data pipeline from external data sources and turning the results into a usable analytical interface.
 
-Some international market values are currently represented using market-related ETF proxies rather than the underlying index itself. This distinction will be addressed as the project develops.
+## 🚀 Future Improvements
 
-This project is for educational and portfolio purposes and is not financial advice.
+Potential future improvements include:
+
+- Automated daily data refresh
+- Additional global market indices
+- More central bank interest rates
+- Historical FX and commodity charts
+- Market comparison tools
+- Additional economic indicators
+- Improved news classification
+- Cloud deployment
