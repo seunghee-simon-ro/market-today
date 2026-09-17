@@ -45,11 +45,61 @@ The data is collected using the Alpha Vantage API and saved as a CSV file for fu
 
 ```text
 market-today/
-│
 ├── README.md
-│
 ├── data/
 │   └── global_market_snapshot.csv
-│
 └── src/
     └── market_data.py
+```
+
+## Data Pipeline
+
+```text
+Alpha Vantage API
+        │
+        ▼
+     Python
+        │
+        ▼
+   Market Data
+        │
+        ▼
+     Pandas
+        │
+        ▼
+Daily Change
+Calculation
+        │
+        ▼
+Market Snapshot
+        │
+        ▼
+     CSV File
+```
+
+## Future Development
+
+The project will gradually expand to include:
+
+- Global interest rates
+- Foreign exchange rates
+- Commodities
+- Market news
+- Simple market explanations
+- "What happened?" summaries
+- "Why does it matter?" explanations
+- Interactive dashboard
+
+## Project Goal
+
+The goal is not simply to collect financial data.
+
+Market Today aims to explore how **data and technology can make complex global markets easier to understand**, especially for people who are new to financial markets.
+
+## Notes
+
+Market data is collected through the Alpha Vantage API.
+
+Some international market values are currently represented using market-related ETF proxies rather than the underlying index itself. This distinction will be addressed as the project develops.
+
+This project is for educational and portfolio purposes and is not financial advice.
