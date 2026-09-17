@@ -205,3 +205,63 @@ st.caption(
     "Market data: Yahoo Finance · "
     "Interest rate data: Federal Reserve Economic Data (FRED)"
 )
+
+st.subheader("💱 Foreign Exchange")
+
+fx_df = pd.read_csv("data/fx_snapshot.csv")
+
+fx_cols = st.columns(4)
+
+for col, (_, row) in zip(fx_cols, fx_df.iterrows()):
+
+    pair = row["Currency Pair"]
+    rate = row["Rate"]
+    change = row["Daily Change (%)"]
+    date = row["Date"]
+
+    if pair == "AUD/USD":
+        rate_text = f"{rate:.4f}"
+    else:
+        rate_text = f"{rate:.2f}"
+
+    col.metric(
+        pair,
+        rate_text,
+        f"{change:+.2f}%"
+    )
+
+    col.caption(f"Last updated: {date}")
+
+
+st.subheader("🪨 Commodities")
+
+commodity_df = pd.read_csv(
+    "data/commodity_snapshot.csv"
+)
+
+commodity_cols = st.columns(4)
+
+for col, (_, row) in zip(
+    commodity_cols,
+    commodity_df.iterrows()
+):
+
+    commodity = row["Commodity"]
+    price = row["Price"]
+    change = row["Daily Change (%)"]
+    date = row["Date"]
+
+    if commodity == "Copper":
+        price_text = f"{price:.2f}"
+    else:
+        price_text = f"{price:,.2f}"
+
+    col.metric(
+        commodity,
+        price_text,
+        f"{change:+.2f}%"
+    )
+
+    col.caption(
+        f"Last updated: {date}"
+    )
