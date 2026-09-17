@@ -1,7 +1,12 @@
 import streamlit as st
 import pandas as pd
 import yfinance as yf
+import altair as alt
 
+
+# ==============================
+# Page configuration
+# ==============================
 
 st.set_page_config(
     page_title="Market Today",
@@ -10,8 +15,12 @@ st.set_page_config(
 )
 
 
+# ==============================
+# Header
+# ==============================
+
 st.title("📈 Market Today")
-st.caption("Global markets, explained simply.")
+st.caption("Global markets, in one simple page.")
 
 
 # ==============================
@@ -62,11 +71,12 @@ with market_tab:
 
     st.subheader("Global Markets")
 
+    # First row
     market_cols = st.columns(3)
 
     for col, (_, row) in zip(
         market_cols,
-        market_df.iterrows()
+        market_df.iloc[:3].iterrows()
     ):
 
         market = row["Market"]
@@ -74,18 +84,54 @@ with market_tab:
         change = row["Daily Change (%)"]
         date = row["Date"]
 
-        col.metric(
-            market,
-            f"{price:,.2f}",
-            f"{change:+.2f}%"
-        )
+        with col:
 
-        col.caption(
-            f"Last updated: {date}"
-        )
+            st.markdown(
+                f"**{market}**"
+            )
+
+            st.metric(
+                label="Index Level",
+                value=f"{price:,.2f}",
+                delta=f"{change:+.2f}%"
+            )
+
+            st.caption(
+                f"Last updated: {date}"
+            )
+
+    # Second row
+    market_cols = st.columns(3)
+
+    for col, (_, row) in zip(
+        market_cols,
+        market_df.iloc[3:6].iterrows()
+    ):
+
+        market = row["Market"]
+        price = row["Price"]
+        change = row["Daily Change (%)"]
+        date = row["Date"]
+
+        with col:
+
+            st.markdown(
+                f"**{market}**"
+            )
+
+            st.metric(
+                label="Index Level",
+                value=f"{price:,.2f}",
+                delta=f"{change:+.2f}%"
+            )
+
+            st.caption(
+                f"Last updated: {date}"
+            )
 
     st.divider()
 
+    # Market performance chart
     st.subheader("Market Performance")
 
     market_options = market_df["Market"].tolist()
@@ -128,8 +174,6 @@ with market_tab:
     )
 
     if not chart_data.empty:
-
-        import altair as alt
 
         close_data = chart_data["Close"]
 
